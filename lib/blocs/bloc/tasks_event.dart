@@ -12,16 +12,16 @@ class AddTask extends TasksEvent {
 
   const AddTask({required this.task});
 
-    @override
+  @override
   List<Object> get props => [task];
 }
 
-class UpdateTask extends TasksEvent {
+class CheckIfTaskIsDone extends TasksEvent {
   final Task task;
 
-  const UpdateTask({required this.task});
+  const CheckIfTaskIsDone({required this.task});
 
-    @override
+  @override
   List<Object> get props => [task];
 }
 
@@ -30,6 +30,6 @@ class DeleteTask extends TasksEvent {
 
   const DeleteTask({required this.task});
 
-    @override
+  @override
   List<Object> get props => [task];
 }

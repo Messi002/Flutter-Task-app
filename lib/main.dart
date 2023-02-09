@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:taskapp/screens/task_screen.dart';
 
 import 'blocs/bloc_exports.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+// final storage = await getApplicationDocumentsDirectory();
+// HydratedBloc.storage = await HydratedStorage.build(storageDirectory: storage);
+HydratedBloc.storage = await HydratedStorage.build(storageDirectory: await getApplicationDocumentsDirectory());
   runApp(const MyApp());
 }
 
