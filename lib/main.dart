@@ -7,8 +7,6 @@ import 'blocs/bloc_exports.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-// final storage = await getApplicationDocumentsDirectory();
-// HydratedBloc.storage = await HydratedStorage.build(storageDirectory: storage);
 HydratedBloc.storage = await HydratedStorage.build(storageDirectory: await getApplicationDocumentsDirectory());
   runApp(const MyApp());
 }
