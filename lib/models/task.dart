@@ -3,8 +3,8 @@
 import 'package:equatable/equatable.dart';
 class Task extends Equatable{
   final String title;
-  late final bool? isDone;
-   late final bool? isDeleted;
+    bool? isDone;
+     bool? isDeleted;
 
   Task({required this.title, this.isDone, this.isDeleted})
   {

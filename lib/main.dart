@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:taskapp/screens/task_screen.dart';
 
+import 'blocs/bloc_exports.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -11,15 +13,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-     
-        primarySwatch: Colors.blue,
+    return BlocProvider(
+      create: (_) => TasksBloc(),
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: TaskScreen(),
       ),
-      home: TaskScreen(),
     );
   }
 }
-
-
