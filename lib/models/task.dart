@@ -1,25 +1,27 @@
-
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:equatable/equatable.dart';
-// ignore: must_be_immutable
-class Task extends Equatable{
-  final String title;
-    bool? isDone;
-     bool? isDeleted;
 
-  Task({required this.title, this.isDone, this.isDeleted})
-  {
+// ignore: must_be_immutable
+class Task extends Equatable {
+  final String title;
+  final String id;
+  bool? isDone;
+  bool? isDeleted;
+
+  Task({required this.title, required this.id,this.isDone, this.isDeleted}) {
     isDone = isDone ?? false;
     isDeleted = isDeleted ?? false;
   }
 
   Task copyWith({
     String? title,
+    String? id,
     bool? isDone,
     bool? isDeleted,
   }) {
     return Task(
       title: title ?? this.title,
+      id: id ?? this.id,
       isDone: isDone ?? this.isDone,
       isDeleted: isDeleted ?? this.isDeleted,
     );
@@ -28,6 +30,7 @@ class Task extends Equatable{
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'title': title,
+      'id': id,
       'isDone': isDone,
       'isDeleted': isDeleted,
     };
@@ -36,13 +39,16 @@ class Task extends Equatable{
   factory Task.fromJson(Map<String, dynamic> json) {
     return Task(
       title: json['title'] as String, //json['title'] ?? ''
-      isDone: json['isDone'] != null ? json['isDone'] as bool : null, //json['isDone']
-      isDeleted: json['isDeleted'] != null ? json['isDeleted'] as bool : null, //json['isDeleted']
+      id: json['id'] as String, //json['title'] ?? ''
+      isDone: json['isDone'] != null
+          ? json['isDone'] as bool
+          : null, //json['isDone']
+      isDeleted: json['isDeleted'] != null
+          ? json['isDeleted'] as bool
+          : null, //json['isDeleted']
     );
   }
-  
+
   @override
-  List<Object?> get props =>[title, isDeleted, isDone];
-
-
+  List<Object?> get props => [title, isDeleted, isDone,id];
 }

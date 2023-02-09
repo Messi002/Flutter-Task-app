@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:taskapp/blocs/bloc_exports.dart';
 import 'package:taskapp/models/task.dart';
+import 'package:taskapp/widgets/task_tile.dart';
 
 class TaskList extends StatelessWidget {
   final List<Task> taskList;
@@ -20,20 +21,10 @@ class TaskList extends StatelessWidget {
         itemCount: taskList.length,
         itemBuilder: (context, index) {
           final task = taskList[index];
-          return ListTile(
-            title: Text(task.title),
-            trailing: Checkbox(
-              value: task.isDone,
-              onChanged: (value) {
-                log('$value');
-                context.read<TasksBloc>().add(CheckIfTaskIsDone(task: task));
-              },
-              
-            ),
-            onTap:() => context.read<TasksBloc>().add(DeleteTask(task: task)),
-          );
+          return TaskTile(task: task);
         },
       ),
     );
   }
 }
+

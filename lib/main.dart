@@ -2,19 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:taskapp/screens/task_screen.dart';
+import 'package:taskapp/services/app.router.dart';
 
 import 'blocs/bloc_exports.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-HydratedBloc.storage = await HydratedStorage.build(storageDirectory: await getApplicationDocumentsDirectory());
-  runApp(const MyApp());
+  HydratedBloc.storage = await HydratedStorage.build(
+      storageDirectory: await getApplicationDocumentsDirectory());
+  runApp( MyApp(appRouter: AppRouter(),));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final AppRouter appRouter;
 
-  // This widget is the root of your application.
+  const MyApp({Key ? key, required this.appRouter}): super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -25,6 +28,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         home: const TaskScreen(),
+        onGenerateRoute: appRouter.onGenerateRoute,
       ),
     );
   }
