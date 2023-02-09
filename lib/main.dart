@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:taskapp/screens/task_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,19 +17,9 @@ class MyApp extends StatelessWidget {
      
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(),
+      home: TaskScreen(),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Home Page'),),
-    );
-  }
-}
 

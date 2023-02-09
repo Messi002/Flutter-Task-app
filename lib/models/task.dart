@@ -1,11 +1,10 @@
 
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:equatable/equatable.dart';
-
 class Task extends Equatable{
   final String title;
-   bool? isDone;
-   bool? isDeleted;
+  late final bool? isDone;
+   late final bool? isDeleted;
 
   Task({required this.title, this.isDone, this.isDeleted})
   {
