@@ -1,29 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:taskapp/blocs/bloc_exports.dart';
 import 'package:taskapp/models/task.dart';
+import 'package:taskapp/widgets/add_task_screen.dart';
 // import 'package:taskapp/models/task.dart';
 import 'package:taskapp/widgets/task_list.dart';
 
+class TaskScreen extends StatefulWidget {
+  const TaskScreen({Key? key}) : super(key: key);
 
-class TaskScreen extends StatelessWidget {
-    TaskScreen({Key? key}) : super(key: key);
+  @override
+  State<TaskScreen> createState() => _TaskScreenState();
+}
 
-   final TextEditingController _controller = TextEditingController();
-
-
+class _TaskScreenState extends State<TaskScreen> {
   void _addTask(BuildContext context) {
     showModalBottomSheet(
       context: context,
       builder: (context) {
-        return SingleChildScrollView(
-          child: Container(
-            padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-          child: Column(
-            children: [
-              TextField(controller: _controller,),
-            ],
-          ),
-          ),
+        return const SingleChildScrollView(
+          child: AddTaskScreen(),
         );
       },
     );
@@ -60,3 +55,4 @@ class TaskScreen extends StatelessWidget {
     );
   }
 }
+
