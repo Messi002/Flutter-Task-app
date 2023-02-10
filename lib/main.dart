@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:taskapp/screens/task_screen.dart';
-import 'package:taskapp/services/app.router.dart';
+import 'package:taskapp/services/app_router.dart';
+import 'package:taskapp/services/app_theme.dart';
 
 import 'blocs/bloc_exports.dart';
 
@@ -10,25 +11,32 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   HydratedBloc.storage = await HydratedStorage.build(
       storageDirectory: await getApplicationDocumentsDirectory());
-  runApp( MyApp(appRouter: AppRouter(),));
+  runApp(MyApp(
+    appRouter: AppRouter(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
   final AppRouter appRouter;
 
-  const MyApp({Key ? key, required this.appRouter}): super(key: key);
+  const MyApp({Key? key, required this.appRouter}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => TasksBloc(),
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: const TaskScreen(),
-        onGenerateRoute: appRouter.onGenerateRoute,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => TasksBloc()),
+        BlocProvider(create: (_) => SwitchBloc())
+      ],
+      child: BlocBuilder<SwitchBloc, SwitchState>(
+        builder: (context, state) {
+          return MaterialApp(
+            title: 'Flutter Demo',
+            theme: state.switchValue ? AppThemes.appThemeData[AppTheme.darkTheme] :  AppThemes.appThemeData[AppTheme.lightTheme],
+            home: const TaskScreen(),
+            onGenerateRoute: appRouter.onGenerateRoute,
+          );
+        },
       ),
     );
   }
