@@ -4,10 +4,16 @@ import 'package:taskapp/blocs/bloc_exports.dart';
 import 'package:taskapp/screens/recycle_bin.dart';
 import 'package:taskapp/screens/task_screen.dart';
 
-class MyDrawer extends StatelessWidget {
+class MyDrawer extends StatefulWidget {
   const MyDrawer({super.key});
   static const id = 'my_drawer';
 
+  @override
+  State<MyDrawer> createState() => _MyDrawerState();
+}
+
+class _MyDrawerState extends State<MyDrawer> {
+  bool switchValue = false;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -25,7 +31,8 @@ class MyDrawer extends StatelessWidget {
             ),
             BlocBuilder<TasksBloc, TasksState>(builder: (context, state) {
               return GestureDetector(
-                onTap: () => Navigator.of(context).pushNamed(TaskScreen.id),
+                onTap: () =>
+                    Navigator.of(context).pushReplacementNamed(TaskScreen.id),
                 child: ListTile(
                   leading: const Icon(Icons.folder_special),
                   title: const Text('My Tasks'),
@@ -36,17 +43,18 @@ class MyDrawer extends StatelessWidget {
             const Divider(),
             BlocBuilder<TasksBloc, TasksState>(
               builder: (context, state) {
-                  return GestureDetector(
-                    onTap: () => Navigator.of(context).pushNamed(RecycleBin.id),
-                    child:  ListTile(
-                      leading: const Icon(Icons.delete),
-                      title: const Text('Bin'),
-                      trailing: Text('${state.removedTasks.length}'),
-                    ),
-                  );
-               
+                return GestureDetector(
+                  onTap: () =>
+                      Navigator.of(context).pushReplacementNamed(RecycleBin.id),
+                  child: ListTile(
+                    leading: const Icon(Icons.delete),
+                    title: const Text('Bin'),
+                    trailing: Text('${state.removedTasks.length}'),
+                  ),
+                );
               },
             ),
+            Switch(value: switchValue, onChanged: (newValue) {}),
           ],
         ),
       ),
