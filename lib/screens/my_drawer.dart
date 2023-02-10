@@ -1,5 +1,6 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:taskapp/blocs/bloc/tasks_bloc.dart';
 import 'package:taskapp/blocs/bloc_exports.dart';
 import 'package:taskapp/screens/recycle_bin.dart';
 import 'package:taskapp/screens/task_screen.dart';
@@ -54,7 +55,13 @@ class _MyDrawerState extends State<MyDrawer> {
                 );
               },
             ),
-            Switch(value: switchValue, onChanged: (newValue) {}),
+            Switch(
+                value: switchValue,
+                onChanged: (newValue) {
+                  setState(() {
+                    switchValue = newValue;
+                  });
+                }),
           ],
         ),
       ),
