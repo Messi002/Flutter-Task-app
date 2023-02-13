@@ -7,7 +7,7 @@ import 'package:taskapp/screens/pending_screen.dart';
 
 class TabsScreen extends StatefulWidget {
   static const id = 'tabs_screen';
-  TabsScreen({super.key});
+  const TabsScreen({super.key});
 
   @override
   State<TabsScreen> createState() => _TabsScreenState();
@@ -43,14 +43,14 @@ class _TabsScreenState extends State<TabsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Tabs Screen'),
+        title: Text( _pageDetails[_selectedPageIndex]['title']),
         actions: [
           IconButton(
               onPressed: () => _addTask(context), icon: const Icon(Icons.add))
         ],
       ),
       drawer: const MyDrawer(),
-      body: PendingTaskScreen(),
+      body: _pageDetails[_selectedPageIndex]['pageName'],
       floatingActionButton: FloatingActionButton(
         onPressed: () => _addTask(context),
         tooltip: 'Add Task',
