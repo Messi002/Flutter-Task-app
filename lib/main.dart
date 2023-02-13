@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             title: 'Flutter Demo',
             theme: state.switchValue ? AppThemes.appThemeData[AppTheme.darkTheme] :  AppThemes.appThemeData[AppTheme.lightTheme],
-            home: const TabsScreen(),
+            home: TabsScreen(),
             onGenerateRoute: appRouter.onGenerateRoute,
           );
         },
