@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:taskapp/screens/task_screen.dart';
+import 'package:taskapp/screens/tabs_screen.dart';
+import 'package:taskapp/screens/pending_screen.dart';
 import 'package:taskapp/services/app_router.dart';
 import 'package:taskapp/services/app_theme.dart';
 
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             title: 'Flutter Demo',
             theme: state.switchValue ? AppThemes.appThemeData[AppTheme.darkTheme] :  AppThemes.appThemeData[AppTheme.lightTheme],
-            home: const TaskScreen(),
+            home: const TabsScreen(),
             onGenerateRoute: appRouter.onGenerateRoute,
           );
         },

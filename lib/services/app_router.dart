@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:taskapp/screens/recycle_bin.dart';
-import 'package:taskapp/screens/task_screen.dart';
+import 'package:taskapp/screens/tabs_screen.dart';
+import 'package:taskapp/screens/pending_screen.dart';
 
 class AppRouter {
   Route? onGenerateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
       case RecycleBin.id:
         return MaterialPageRoute(builder: (_) => const RecycleBin());
-      case TaskScreen.id:
-        return MaterialPageRoute(builder: (_) => const TaskScreen());
+      case PendingTaskScreen.id:
+        return MaterialPageRoute(builder: (_) => const PendingTaskScreen());
+      case TabsScreen.id:
+        return MaterialPageRoute(builder: (_) => const TabsScreen());
       default:
         return null;
     }
