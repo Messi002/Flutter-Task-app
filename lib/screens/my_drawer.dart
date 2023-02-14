@@ -32,7 +32,7 @@ class MyDrawer extends StatelessWidget {
                 child: ListTile(
                   leading: const Icon(Icons.folder_special),
                   title: const Text('My Tasks'),
-                  trailing: Text('${state.allTasks.length}'),
+                  trailing: Text('${state.pendingTasks.length}'),
                 ),
               );
             }),

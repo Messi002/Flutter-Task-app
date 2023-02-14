@@ -24,6 +24,7 @@ class _TabsScreenState extends State<TabsScreen> {
 
   void _addTask(BuildContext context) {
     showModalBottomSheet(
+      isScrollControlled: true, //TODO: also try to remove this property and also use padding.view.insests
       context: context,
       builder: (context) {
         return SingleChildScrollView(
@@ -51,11 +52,11 @@ class _TabsScreenState extends State<TabsScreen> {
       ),
       drawer: const MyDrawer(),
       body: _pageDetails[_selectedPageIndex]['pageName'],
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: _selectedPageIndex == 0 ?  FloatingActionButton(
         onPressed: () => _addTask(context),
         tooltip: 'Add Task',
         child: const Icon(Icons.add),
-      ),
+      ) : null,
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedPageIndex,
         onTap: (index) {
@@ -65,7 +66,7 @@ class _TabsScreenState extends State<TabsScreen> {
         },
         items: const [
           BottomNavigationBarItem(
-              icon: Icon(Icons.list), label: 'Pending Tasks'),
+              icon: Icon(Icons.incomplete_circle_sharp), label: 'Pending Tasks'),
           BottomNavigationBarItem(
               icon: Icon(Icons.done), label: 'Completed Tasks'),
           BottomNavigationBarItem(

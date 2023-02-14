@@ -14,12 +14,12 @@ class PendingTaskScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<TasksBloc, TasksState>(
       builder: (context, state) {
-        final List<Task> taskList = state.allTasks;
+        final List<Task> taskList = state.pendingTasks;
         return Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Center(
-              child: Chip(label: Text('${state.allTasks.length} Tasks')),
+              child: Chip(label: Text('${state.pendingTasks.length} Tasks')),
             ),
             TaskList(taskList: taskList)
           ],

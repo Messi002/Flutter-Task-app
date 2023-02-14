@@ -18,17 +18,20 @@ class AddTaskScreen extends StatefulWidget {
 }
 
 class _AddTaskScreenState extends State<AddTaskScreen> {
-  late final TextEditingController controller;
+  late final TextEditingController textController;
+  late final TextEditingController descriptionController;
 
   @override
   void initState() {
-    controller = TextEditingController();
+    textController = TextEditingController();
+    descriptionController = TextEditingController();
     super.initState();
   }
 
   @override
   void dispose() {
-    controller.dispose();
+    textController.dispose();
+    descriptionController.dispose();
     super.dispose();
   }
 
@@ -43,11 +46,28 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
         const SizedBox(
           height: 10,
         ),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 8, top: 8),
+          child: TextField(
+            autofocus: true,
+            controller: textController,
+            decoration: const InputDecoration(
+              label: Text('Task Title'),
+              hintText: 'Start typing...',
+              border: OutlineInputBorder(),
+            ),
+          ),
+        ),
+            const SizedBox(
+          height: 10,
+        ),
         TextField(
           autofocus: true,
-          controller: controller,
+          controller: descriptionController,
+          minLines: 3,
+          maxLines: 5,
           decoration: const InputDecoration(
-            label: Text('Task Title'),
+            label: Text('Task Description'),
             hintText: 'Start typing...',
             border: OutlineInputBorder(),
           ),
@@ -65,9 +85,9 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 onPressed: () {
                   final String uuid = GUIDGEN.generate();
                   log('This is from GUID.generate: $uuid');
-                  final task = Task(id: uuid, title: controller.text.trim());
+                  final task = Task(id: uuid, title: textController.text.trim(), description: descriptionController.text.trim());
                   context.read<TasksBloc>().add(AddTask(task: task));
-                  controller.clear();
+                  textController.clear();
                   Navigator.pop(context);
                 },
                 child: const Text('Add')),
