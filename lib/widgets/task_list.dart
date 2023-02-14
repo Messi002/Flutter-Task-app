@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:taskapp/blocs/bloc_exports.dart';
 import 'package:taskapp/models/task.dart';
@@ -15,29 +13,25 @@ class TaskList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ExpansionPanelList.radio(
-      children: taskList.map((task) => ExpansionPanelRadio(
-        value: task.id , 
-        headerBuilder:(context, isExpanded) => TaskTile(task: task), 
-        body: SelectableText.rich(
-          TextSpan(
-            children: [
-              const TextSpan(
-                text: 'Text',
-                style: TextStyle(fontWeight: FontWeight.bold)
-              ),
-                const TextSpan(
-                text: 'Description',
-                style: TextStyle(fontWeight: FontWeight.bold)
-              ),
-                const TextSpan(
-                text: 'Text',
-                style: TextStyle(fontWeight: FontWeight.bold)
-              ),
-            ]
-          )
-        )
-        )).toList(),
+    return SingleChildScrollView(
+      child: ExpansionPanelList.radio(
+        children: taskList
+            .map((task) => ExpansionPanelRadio(
+                value: task.id,
+                headerBuilder: (context, isExpanded) => TaskTile(task: task),
+                body: SelectableText.rich(TextSpan(children: [
+                  const TextSpan(
+                      text: 'Text\n',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  const TextSpan(
+                      text: '\n\nDescription\n',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  TextSpan(
+                    text: task.description,
+                  ),
+                ]))))
+            .toList(),
+      ),
     );
   }
 }
