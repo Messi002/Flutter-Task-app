@@ -16,23 +16,61 @@ class TaskTile extends StatelessWidget {
         ? context.read<TasksBloc>().add(DeleteTask(task: task))
         : context.read<TasksBloc>().add(RemoveTask(task: task));
   }
-
+//TODO: Test out orientation
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(
-        task.title,
-        style: TextStyle(
-            decoration: task.isDone! ? TextDecoration.lineThrough : null),
-      ),
-      trailing: Checkbox(
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Expanded(
+          child: Row(
+            children: [
+              Icon(Icons.star_outline),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      task.title,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 18,
+                          decoration:
+                              task.isDone! ? TextDecoration.lineThrough : null),
+                    ),
+                    Text(DateTime.now().toString())
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        Checkbox(
         value: task.isDone,
         onChanged: !task.isDeleted! ? (value) {
           log('$value');
           context.read<TasksBloc>().add(CheckIfTaskIsDone(task: task));
         } : null,
       ),
-      onTap: () => _removeOrDeleteTask(context, task),
+      ],
     );
   }
 }
+
+
+// ListTile(
+//       title: Text(
+//         task.title,
+//         overflow: TextOverflow.ellipsis,
+//         style: TextStyle(
+//             decoration: task.isDone! ? TextDecoration.lineThrough : null),
+//       ),
+//       trailing: Checkbox(
+//         value: task.isDone,
+//         onChanged: !task.isDeleted! ? (value) {
+//           log('$value');
+//           context.read<TasksBloc>().add(CheckIfTaskIsDone(task: task));
+//         } : null,
+//       ),
+//       onTap: () => _removeOrDeleteTask(context, task),
+//     );
