@@ -18,6 +18,7 @@ class TaskTile extends StatelessWidget {
         ? context.read<TasksBloc>().add(DeleteTask(task: task))
         : context.read<TasksBloc>().add(RemoveTask(task: task));
   }
+
 //TODO: Test out orientation
   @override
   Widget build(BuildContext context) {
@@ -30,7 +31,9 @@ class TaskTile extends StatelessWidget {
             child: Row(
               children: [
                 Icon(Icons.star_outline),
-                const SizedBox(width: 10,),
+                const SizedBox(
+                  width: 10,
+                ),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -39,12 +42,16 @@ class TaskTile extends StatelessWidget {
                         task.title,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                          fontSize: 18,
-                            decoration:
-                                task.isDone! ? TextDecoration.lineThrough : null),
+                            fontSize: 18,
+                            decoration: task.isDone!
+                                ? TextDecoration.lineThrough
+                                : null),
                       ),
                       // Text(DateFormat('dd-MM-yyyy').format(DateTime.now())), //OR THE ONE BELOW
-                      Text(DateFormat().add_yMMMd().add_Hm().format(DateTime.parse(task.date))),
+                      Text(DateFormat()
+                          .add_yMMMd()
+                          .add_Hm()
+                          .format(DateTime.parse(task.date))),
                     ],
                   ),
                 ),
@@ -54,13 +61,21 @@ class TaskTile extends StatelessWidget {
           Row(
             children: [
               Checkbox(
-              value: task.isDone,
-              onChanged: !task.isDeleted! ? (value) {
-                log('$value');
-                context.read<TasksBloc>().add(CheckIfTaskIsDone(task: task));
-              } : null,
-        ),
-        PopupMenu(task: task, cancelOrDelete: () =>  _removeOrDeleteTask(context, task),)
+                value: task.isDone,
+                onChanged: !task.isDeleted!
+                    ? (value) {
+                        log('$value');
+                        context
+                            .read<TasksBloc>()
+                            .add(CheckIfTaskIsDone(task: task));
+                      }
+                    : null,
+              ),
+              PopupMenu(
+                task: task,
+                cancelOrDelete: () => _removeOrDeleteTask(context, task),
+                likeOrDislike: () => context.read<TasksBloc>().add(MarkFavoriteOrUnfavoriteTask(task: task)),
+              ),
             ],
           ),
         ],
