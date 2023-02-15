@@ -34,23 +34,39 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
 
     List<Task> pendingTasks = state.pendingTasks;
     List<Task> completedTasks = state.completedTasks;
+    List<Task> favoriteTasks = state.favoriteTasks;
 
-    task.isDone == false
-        ? {
-            pendingTasks = [...state.pendingTasks]..remove(task),
-            completedTasks = [...state.completedTasks]
-              ..insert(0, task.copyWith(isDone: true))
-          }
-        : {
-            completedTasks = [...state.completedTasks]..remove(task),
-            pendingTasks = [...state.pendingTasks]
-              ..insert(0, task.copyWith(isDone: false))
-          };
+    if (task.isDone == false) {
+      if (task.isFavorite == false) {
+        pendingTasks = [...state.pendingTasks]..remove(task);
+        completedTasks.insert(0, task.copyWith(isDone: true));
+      } else {
+        var taskIndex = favoriteTasks.indexOf(task);
+        pendingTasks = [...state.pendingTasks]..remove(task);
+        completedTasks.insert(0, task.copyWith(isDone: true));
+        favoriteTasks = [...state.favoriteTasks]
+          ..remove(task)
+          ..insert(taskIndex, task.copyWith(isDone: true));
+      }
+    } else {
+      if (task.isFavorite == false) {
+        completedTasks = [...state.completedTasks]..remove(task);
+        pendingTasks.insert(0, task.copyWith(isFavorite: false));
+      } else {
+        var taskIndex = favoriteTasks.indexOf(task);
+        completedTasks = [...state.completedTasks]..remove(task);
+        pendingTasks = [...pendingTasks]
+          ..insert(0, task.copyWith(isDone: false));
+        favoriteTasks = [...state.favoriteTasks]
+          ..remove(task)
+          ..insert(taskIndex, task.copyWith(isDone: false));
+      }
+    }
 
     emit(TasksState(
         pendingTasks: pendingTasks,
         completedTasks: completedTasks,
-        favoriteTasks: state.favoriteTasks,
+        favoriteTasks: favoriteTasks,
         removedTasks: state.removedTasks));
   }
 
@@ -170,9 +186,8 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
         removedTasks: removedTasks));
   }
 
-    void _onDeleteAllTasks(DeleteTask event, Emitter<TasksState> emit) {
+  void _onDeleteAllTasks(DeleteAllTasks event, Emitter<TasksState> emit) {
     final state = this.state;
-
 
     final List<Task> removedTasks = [...(state).removedTasks]..clear();
 
@@ -193,5 +208,3 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
     return state.toMap();
   }
 }
-
-
