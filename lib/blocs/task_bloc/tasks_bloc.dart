@@ -13,8 +13,8 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
     on<RemoveTask>(_onRemoveTask);
     on<MarkFavoriteOrUnfavoriteTask>(_onMarkFavoriteOrUnfavoriteTask);
     on<EditTask>(_onEditTask);
-    // on<RestoreTask>(_onRestoreTask);
-    // on<DeleteAllTasks>(_onDeleteAllTasks);
+    on<RestoreTask>(_onRestoreTask);
+    on<DeleteAllTasks>(_onDeleteAllTasks);
   }
 
   void _onAddTask(AddTask event, Emitter<TasksState> emit) {
@@ -155,6 +155,34 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
         removedTasks: state.removedTasks));
   }
 
+  void _onRestoreTask(RestoreTask event, Emitter<TasksState> emit) {
+    final state = this.state;
+    final task = event.task;
+
+    final List<Task> removedTasks = [...(state).removedTasks]..remove(task);
+    final List<Task> pendingTasks = [...(state).pendingTasks]..insert(
+        0, task.copyWith(isDeleted: false, isDone: false, isFavorite: false));
+
+    emit(TasksState(
+        pendingTasks: pendingTasks,
+        completedTasks: state.pendingTasks,
+        favoriteTasks: state.favoriteTasks,
+        removedTasks: removedTasks));
+  }
+
+    void _onDeleteAllTasks(DeleteTask event, Emitter<TasksState> emit) {
+    final state = this.state;
+
+
+    final List<Task> removedTasks = [...(state).removedTasks]..clear();
+
+    emit(TasksState(
+        pendingTasks: state.pendingTasks,
+        completedTasks: state.pendingTasks,
+        favoriteTasks: state.favoriteTasks,
+        removedTasks: removedTasks));
+  }
+
   @override
   TasksState? fromJson(Map<String, dynamic> json) {
     return TasksState.fromJson(json);
@@ -167,7 +195,3 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
 }
 
 
-// IAMDANIELNETFLIX$$
-//njid18753@gmail.com
-
-//H))$D&i$E#6/2+w

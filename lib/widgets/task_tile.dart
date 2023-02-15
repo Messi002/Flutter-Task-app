@@ -20,9 +20,10 @@ class TaskTile extends StatelessWidget {
         : context.read<TasksBloc>().add(RemoveTask(task: task));
   }
 
-    void _editTask(BuildContext context) {
+  void _editTask(BuildContext context) {
     showModalBottomSheet(
-      isScrollControlled: true, //TODO: also try to remove this property and also use padding.view.insests
+      isScrollControlled:
+          true, //TODO: also try to remove this property and also use padding.view.insests
       context: context,
       builder: (context) {
         return SingleChildScrollView(
@@ -32,7 +33,9 @@ class TaskTile extends StatelessWidget {
               left: 20,
               right: 20,
               top: 20),
-          child: EditTaskScreen(oldtask: task,),
+          child: EditTaskScreen(
+            oldtask: task,
+          ),
         ));
       },
     );
@@ -49,7 +52,9 @@ class TaskTile extends StatelessWidget {
           Expanded(
             child: Row(
               children: [
-                task.isFavorite == false ? const Icon(Icons.star_outline) : const Icon(Icons.star_outlined),
+                task.isFavorite == false
+                    ? const Icon(Icons.star_outline)
+                    : const Icon(Icons.star_outlined),
                 const SizedBox(
                   width: 10,
                 ),
@@ -93,8 +98,14 @@ class TaskTile extends StatelessWidget {
               PopupMenu(
                 task: task,
                 cancelOrDelete: () => _removeOrDeleteTask(context, task),
-                likeOrDislike: () => context.read<TasksBloc>().add(MarkFavoriteOrUnfavoriteTask(task: task)),
-                editTaskCallBack: () => _editTask(context),
+                likeOrDislike: () => context
+                    .read<TasksBloc>()
+                    .add(MarkFavoriteOrUnfavoriteTask(task: task)),
+                editTaskCallBack: () {
+                  _editTask(context);
+                  Navigator.of(context).pop();
+                },
+                restoreTaskCallBack: () => context.read<TasksBloc>().add(RestoreTask(task: task)),
               ),
             ],
           ),
