@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:taskapp/blocs/bloc_exports.dart';
 import 'package:taskapp/models/task.dart';
+import 'package:taskapp/screens/edit_task_screen.dart';
 import 'package:taskapp/widgets/popup_menu.dart';
 
 class TaskTile extends StatelessWidget {
@@ -19,6 +20,24 @@ class TaskTile extends StatelessWidget {
         : context.read<TasksBloc>().add(RemoveTask(task: task));
   }
 
+    void _editTask(BuildContext context) {
+    showModalBottomSheet(
+      isScrollControlled: true, //TODO: also try to remove this property and also use padding.view.insests
+      context: context,
+      builder: (context) {
+        return SingleChildScrollView(
+            child: Container(
+          padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).viewInsets.bottom,
+              left: 20,
+              right: 20,
+              top: 20),
+          child: EditTaskScreen(oldtask: task,),
+        ));
+      },
+    );
+  }
+
 //TODO: Test out orientation
   @override
   Widget build(BuildContext context) {
@@ -30,7 +49,7 @@ class TaskTile extends StatelessWidget {
           Expanded(
             child: Row(
               children: [
-                Icon(Icons.star_outline),
+                task.isFavorite == false ? const Icon(Icons.star_outline) : const Icon(Icons.star_outlined),
                 const SizedBox(
                   width: 10,
                 ),
@@ -75,6 +94,7 @@ class TaskTile extends StatelessWidget {
                 task: task,
                 cancelOrDelete: () => _removeOrDeleteTask(context, task),
                 likeOrDislike: () => context.read<TasksBloc>().add(MarkFavoriteOrUnfavoriteTask(task: task)),
+                editTaskCallBack: () => _editTask(context),
               ),
             ],
           ),
