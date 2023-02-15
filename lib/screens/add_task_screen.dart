@@ -58,7 +58,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
             ),
           ),
         ),
-            const SizedBox(
+        const SizedBox(
           height: 10,
         ),
         TextField(
@@ -85,7 +85,12 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 onPressed: () {
                   final String uuid = GUIDGEN.generate();
                   log('This is from GUID.generate: $uuid');
-                  final task = Task(id: uuid, title: textController.text.trim(), description: descriptionController.text.trim());
+                  final task = Task(
+                    id: uuid,
+                    title: textController.text.trim(),
+                    description: descriptionController.text.trim(),
+                    date: DateTime.now().toString()
+                  );
                   context.read<TasksBloc>().add(AddTask(task: task));
                   textController.clear();
                   Navigator.pop(context);

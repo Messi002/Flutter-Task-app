@@ -44,7 +44,7 @@ class TaskTile extends StatelessWidget {
                                 task.isDone! ? TextDecoration.lineThrough : null),
                       ),
                       // Text(DateFormat('dd-MM-yyyy').format(DateTime.now())), //OR THE ONE BELOW
-                      Text(DateFormat().add_yMMMd().add_Hm().format(DateTime.now())),
+                      Text(DateFormat().add_yMMMd().add_Hm().format(DateTime.parse(task.date))),
                     ],
                   ),
                 ),
@@ -60,7 +60,7 @@ class TaskTile extends StatelessWidget {
                 context.read<TasksBloc>().add(CheckIfTaskIsDone(task: task));
               } : null,
         ),
-        PopupMenu(cancelOrDelete: () =>  _removeOrDeleteTask(context, task),)
+        PopupMenu(task: task, cancelOrDelete: () =>  _removeOrDeleteTask(context, task),)
             ],
           ),
         ],
