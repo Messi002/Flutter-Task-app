@@ -20,6 +20,7 @@ class TaskTile extends StatelessWidget {
         : context.read<TasksBloc>().add(RemoveTask(task: task));
   }
 
+
   void _editTask(BuildContext context) {
     showModalBottomSheet(
       isScrollControlled:
