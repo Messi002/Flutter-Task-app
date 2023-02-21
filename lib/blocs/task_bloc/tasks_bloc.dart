@@ -63,12 +63,6 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
       }
     }
 
-    emit(TasksState(
-        pendingTasks: pendingTasks,
-        completedTasks: completedTasks,
-        favoriteTasks: favoriteTasks,
-        removedTasks: state.removedTasks));
-  }
 
   void _onRemoveTask(RemoveTask event, Emitter<TasksState> emit) {
     final state = this.state;
